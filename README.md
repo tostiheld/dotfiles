@@ -8,6 +8,7 @@ included are configs for:
 - terminator
 - .bashrc (custom prompt)
 - gtk
+- compton
 
 screenshot:
 
