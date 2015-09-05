@@ -1,0 +1,166 @@
+# i3 config file
+# solarized theme
+# tostiheld - v2 2015
+
+# ----------
+# general config
+# ----------
+
+# variables
+set $mod Mod4
+
+set $w1  "1: www"
+set $w2  "2"
+set $w3  "3"
+set $w4  "4"
+set $w5  "5"
+set $w6  "6"
+set $w7  "7"
+set $w8  "8"
+set $w9  "9: im"
+set $w10 "10: mail"
+
+# window title font
+font pango:DejaVu Sans Mono 8
+
+# ----------
+# keybindings
+# ----------
+
+bindsym $mod+Shift+r restart
+#bindsym $mod+Shift+e 
+
+# window / container operations
+floating_modifier $mod
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+Shift+q kill
+bindsym $mod+f fullscreen
+
+bindsym $mod+q split h
+bindsym $mod+w split v
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#bindsym $mod+a layout stacking
+#bindsym $mod+s layout tabbed
+#bindsym $mod+d layout toggle split
+
+# utilities
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+r exec rofi -show run -lines 5 -width 100 -padding 500 -opacity "80" -bw 0 -bc "#000000" -bg "#333333" -fg "#ffffff" -hlbg "#080808"
+bindsym $mod+e exec thunar
+bindsym $mod+l exec ~/bin/blurlock.sh
+
+# workspace switching / moving
+bindsym $mod+1 workspace $w1
+bindsym $mod+2 workspace $w2
+bindsym $mod+3 workspace $w3
+bindsym $mod+4 workspace $w4
+bindsym $mod+5 workspace $w5
+bindsym $mod+6 workspace $w6
+bindsym $mod+7 workspace $w7
+bindsym $mod+8 workspace $w8
+bindsym $mod+9 workspace $w9
+bindsym $mod+0 workspace $w10
+
+bindsym $mod+Shift+1 move container to workspace $w1
+bindsym $mod+Shift+2 move container to workspace $w2
+bindsym $mod+Shift+3 move container to workspace $w3
+bindsym $mod+Shift+4 move container to workspace $w4
+bindsym $mod+Shift+5 move container to workspace $w5
+bindsym $mod+Shift+6 move container to workspace $w6
+bindsym $mod+Shift+7 move container to workspace $w7
+bindsym $mod+Shift+8 move container to workspace $w8
+bindsym $mod+Shift+9 move container to workspace $w9
+bindsym $mod+Shift+0 move container to workspace $w10
+
+bindsym $mod+t mode "resize"
+
+# resize mode
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# ----------
+# i3bar
+# ----------
+
+bar {
+    position top
+    status_command .i3/conkybar.sh
+    font pango:Droid Sans Mono 8
+    colors {
+        background #002b36
+        statusline #eee8d5
+
+        focused_workspace #93a1a1 #268bd2 #eee8d5
+        urgent_workspace  #93a1a1 #dc322f #eee8d5
+    }
+}
+
+# ----------
+# window-specific settings
+# ----------
+
+for_window [class="Xarchiver"]       floating enable
+for_window [class="Wicd-client.py"]  floating enable
+
+# ----------
+# style
+# ----------
+
+# border size
+new_window pixel 2
+
+# window colors border  background text    indicator
+client.focused  #268bd2 #268bd2    #ffffff #2e9ef4
+client.urgent   #dc322f #900000    #ffffff #900000
+
+# ----------
+# autostart
+# ----------
+
+exec compton
+exec nitrogen --restore
+exec xset -b
+exec wicd-client --tray
+exec davmail
+
+exec pnmixer
+exec xfce4-volumed
+exec xfce4-power-manager
+exec thunar --daemon
+exec xautolock -time 3 -locker "~/bin/blurlock.sh"
+exec clipit
+exec redshift-gtk
+exec dropbox start
+exec ~/bin/unlockdropbox.sh
