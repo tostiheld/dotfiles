@@ -1,6 +1,12 @@
 # use gitignore as whitelist
 *
-
 !.gitignore
+!.config/
+
 !README.md
 !screenfetch.png
+
+!.i3/*
+
+!dunst/
+!dunstrc
