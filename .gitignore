@@ -1,2 +1,4 @@
 # use gitignore as whitelist
 *
+!.gitignore
+!README.md
