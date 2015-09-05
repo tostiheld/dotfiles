@@ -7,6 +7,5 @@
 !screenfetch.png
 
 !.i3/*
-
-!dunst/
-!dunstrc
+!dunst/*
+!.bashrc
