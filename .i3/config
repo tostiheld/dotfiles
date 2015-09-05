@@ -135,6 +135,15 @@ for_window [class="Xarchiver"]       floating enable
 for_window [class="Wicd-client.py"]  floating enable
 
 # ----------
+# auto assignment
+# ----------
+
+assign [class="Evolution"] $w10
+assign [class="telegram"]  $w9
+assign [class="Skype"]     $w9
+assign [class="Firefox"]   $w1
+
+# ----------
 # style
 # ----------
 
