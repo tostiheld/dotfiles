@@ -10,15 +10,15 @@
 set $mod Mod4
 
 set $w1  "1: www"
-set $w2  "2"
-set $w3  "3"
+set $w2  "2: im"
+set $w3  "3: mail"
 set $w4  "4"
 set $w5  "5"
 set $w6  "6"
 set $w7  "7"
 set $w8  "8"
-set $w9  "9: im"
-set $w10 "10: mail"
+set $w9  "9"
+set $w10 "10"
 
 # window title font
 font pango:DejaVu Sans Mono 8
@@ -131,16 +131,17 @@ bar {
 # window-specific settings
 # ----------
 
-for_window [class="Xarchiver"]       floating enable
-for_window [class="Wicd-client.py"]  floating enable
+for_window [class="Xarchiver"]      floating enable
+for_window [class="Wicd-client.py"] floating enable
+for_window [class="Galculator"]     floating enable
 
 # ----------
 # auto assignment
 # ----------
 
-assign [class="Evolution"] $w10
-assign [class="telegram"]  $w9
-assign [class="Skype"]     $w9
+assign [class="Evolution"] $w3
+assign [class="telegram"]  $w2
+assign [class="Skype"]     $w2
 assign [class="Firefox"]   $w1
 
 # ----------
