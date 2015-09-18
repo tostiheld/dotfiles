@@ -9,16 +9,16 @@
 # variables
 set $mod Mod4
 
-set $w1  "1: www"
-set $w2  "2: im"
-set $w3  "3: mail"
-set $w4  "4"
-set $w5  "5"
-set $w6  "6"
-set $w7  "7"
-set $w8  "8"
-set $w9  "9"
-set $w10 "10"
+set $w1  "α: www"
+set $w2  "β: im"
+set $w3  "γ: mail"
+set $w4  "δ"
+set $w5  "ε"
+set $w6  "ζ"
+set $w7  "η"
+set $w8  "θ"
+set $w9  "ι"
+set $w10 "κ"
 
 # window title font
 font pango:DejaVu Sans Mono 8
@@ -41,19 +41,21 @@ bindsym $mod+f fullscreen
 bindsym $mod+q split h
 bindsym $mod+w split v
 
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
 bindsym $mod+Right focus right
+bindsym $mod+g     focus parent
+bindsym $mod+h     focus child
 
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-#bindsym $mod+a layout stacking
-#bindsym $mod+s layout tabbed
-#bindsym $mod+d layout toggle split
+bindsym $mod+a layout stacking
+bindsym $mod+s layout tabbed
+bindsym $mod+d layout toggle split
 
 # utilities
 bindsym $mod+Return exec i3-sensible-terminal
@@ -118,6 +120,11 @@ bar {
     position top
     status_command .i3/conkybar.sh
     font pango:Droid Sans Mono 8
+
+    #wheel_up_cmd   nop
+    #wheel_down_cmd nop
+    #separator_symbol " / "
+
     colors {
         background #002b36
         statusline #eee8d5
