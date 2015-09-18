@@ -5,6 +5,7 @@
   title_transmit_bg_color = "#d30102"
   focus = system
 [keybindings]
+  group_all = <Primary><Alt>g
 [profiles]
   [[default]]
     scrollbar_position = hidden
