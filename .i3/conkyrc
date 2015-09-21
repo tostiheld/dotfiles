@@ -11,9 +11,9 @@ pad_percents 3
 cpu_avg_samples 2
 TEXT
 [
-{"full_text": "cpu: ${cpu cpu0}% (~${execi 8 sensors | grep 'Core 0:' | cut -c16-17} C) (${exec cpufreq-info | grep "The governor" | cut -d'"' -f2 | head -1}) ", "color":"\#b58900"},
-{"full_text": " ram: $mem ","color":"\#cb4b16"},
-{"full_text": " /home: ${fs_used /home}/${fs_size /home} ","color":"\#586e75"},
-{"full_text": " bat: ${battery_short} (${exec cat /sys/class/backlight/acpi_video0/brightness}) ", "color":"\#6c71c4"},
-{"full_text": " ${time %a %d/%m %H:%M} ", "color":"\#2aa198"}
+{"full_text": "cpu: ${cpu cpu0}% (~${execi 8 sensors | grep 'Core 0:' | cut -c16-17} C) (${exec cpufreq-info | grep "The governor" | cut -d'"' -f2 | head -1})", "color":"\#b58900"},
+{"full_text": "ram: $mem","color":"\#cb4b16"},
+{"full_text": "/home: ${fs_used /home}/${fs_size /home}","color":"\#586e75"},
+{"full_text": "bat: ${battery_short} (${exec cat /sys/class/backlight/acpi_video0/brightness})", "color":"\#6c71c4"},
+{"full_text": "${time %a %d/%m %H:%M} ", "color":"\#2aa198"}
 ],
