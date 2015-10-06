@@ -18,7 +18,7 @@ set $w6  "6ζ"
 set $w7  "7η"
 set $w8  "8θ"
 set $w9  "9ι"
-set $w10 "0κ"
+set $w10 "10κ"
 
 # window title font
 font pango:DejaVu Sans Mono 8
@@ -171,7 +171,6 @@ exec compton
 exec nitrogen --restore
 exec xset -b
 exec wicd-client --tray
-exec davmail
 
 exec pnmixer
 exec xfce4-volumed
