@@ -45,4 +45,6 @@ PS1='\[\e[0;33m\]\u\[\e[m\]@\[\e[0;34m\]\h \[\e[1;37m\]\w\[\e[m\] \[\e[0;33m\]\$
 PATH=$PATH:$HOME/bin
 
 # lo theme
-SAL_USE_VCLPLUGIN=gtk3
+SAL_USE_VCLPLUGIN=gtk
+
+eval $(thefuck --alias)
