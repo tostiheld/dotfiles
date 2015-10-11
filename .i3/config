@@ -139,9 +139,10 @@ bar {
 # window-specific settings
 # ----------
 
-for_window [class="Xarchiver"]      floating enable
-for_window [class="Wicd-client.py"] floating enable
-for_window [class="Galculator"]     floating enable
+for_window [class="Xarchiver"]               floating enable
+for_window [class="Wicd-client.py"]          floating enable
+for_window [class="Galculator"]              floating enable
+for_window [title="File Operation Progress"] floating enable
 
 # ----------
 # auto assignment
@@ -150,7 +151,7 @@ for_window [class="Galculator"]     floating enable
 assign [class="Evolution"] $w3
 assign [class="telegram"]  $w2
 assign [class="Skype"]     $w2
-assign [class="Firefox"]   $w1
+assign [class="Iceweasel"] $w1
 
 # ----------
 # style
