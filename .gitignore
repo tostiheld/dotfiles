@@ -16,5 +16,6 @@
 !.gtkrc-2.0
 !.Xresources
 !compton.conf
+!.fonts.config
 
 !blurlock.sh
