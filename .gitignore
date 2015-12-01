@@ -17,5 +17,6 @@
 !.Xresources
 !compton.conf
 !.fonts.config
+!user-dirs.dirs
 
 !blurlock.sh
