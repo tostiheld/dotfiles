@@ -144,6 +144,9 @@ for_window [class="Wicd-client.py"]          floating enable
 for_window [class="Galculator"]              floating enable
 for_window [title="File Operation Progress"] floating enable
 
+#temp for game dev
+for_window [class="SurvivalRpg"] floating enable, move position 100 px 100 px
+
 # ----------
 # auto assignment
 # ----------
@@ -151,7 +154,7 @@ for_window [title="File Operation Progress"] floating enable
 assign [class="Evolution"] $w3
 assign [class="telegram"]  $w2
 assign [class="Skype"]     $w2
-assign [class="Iceweasel"] $w1
+assign [class="Firefox"] $w1
 
 # ----------
 # style
@@ -181,4 +184,5 @@ exec xautolock -time 3 -locker "~/bin/blurlock.sh"
 exec clipit
 exec redshift-gtk
 exec dropbox start
+exec google-drive-ocamlfuse google-drive
 exec ~/bin/unlockdropbox.sh
