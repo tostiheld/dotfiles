@@ -171,7 +171,7 @@ client.urgent   #dc322f #900000    #ffffff #900000
 # autostart
 # ----------
 
-#exec compton
+exec compton
 exec nitrogen --restore
 exec xset -b
 exec wicd-client --tray
