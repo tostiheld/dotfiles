@@ -58,7 +58,7 @@ bindsym $mod+s layout tabbed
 bindsym $mod+d layout toggle split
 
 # utilities
-bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id urxvt
 bindsym $mod+r exec --no-startup-id rofi -show run -lines 5 -width 100 -padding 500 -opacity "80" -bw 0 -bc "#000000" -bg "#333333" -fg "#ffffff" -hlbg "#080808"
 bindsym $mod+e exec --no-startup-id thunar
 bindsym $mod+l exec --no-startup-id ~/bin/blurlock.sh
@@ -171,7 +171,7 @@ client.urgent   #dc322f #900000    #ffffff #900000
 # autostart
 # ----------
 
-exec compton
+#exec compton
 exec nitrogen --restore
 exec xset -b
 exec wicd-client --tray
