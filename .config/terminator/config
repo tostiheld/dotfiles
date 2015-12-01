@@ -1,7 +1,5 @@
-# solarized terminator config
-# tostiheld 2015
-
 [global_config]
+  geometry_hinting = False
   title_transmit_bg_color = "#d30102"
   focus = system
 [keybindings]
