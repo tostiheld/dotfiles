@@ -77,3 +77,7 @@ URxvt*letterSpace: -1
 URxvt.font: xft:Monospace:size=10
 URxvt.depth: 32
 
+! rofi
+rofi.opacity: 80
+rofi.width: 100
+rofi.padding: 450

@@ -59,9 +59,10 @@ bindsym $mod+d layout toggle split
 
 # utilities
 bindsym $mod+Return exec --no-startup-id urxvt
-bindsym $mod+r exec --no-startup-id rofi -show run -lines 5 -width 100 -padding 500 -opacity "80" -bw 0 -bc "#000000" -bg "#333333" -fg "#ffffff" -hlbg "#080808"
-bindsym $mod+e exec --no-startup-id thunar
-bindsym $mod+l exec --no-startup-id ~/bin/blurlock.sh
+bindsym $mod+r      exec --no-startup-id rofi -show run
+bindsym $mod+Tab    exec --no-startup-id rofi -show window
+bindsym $mod+e      exec --no-startup-id thunar
+bindsym $mod+l      exec --no-startup-id ~/bin/blurlock.sh
 
 # workspace switching / moving
 bindsym $mod+1 workspace $w1
