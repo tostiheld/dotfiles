@@ -18,5 +18,8 @@
 !compton.conf
 !.fonts.config
 !user-dirs.dirs
+!geany/
+!colorschemes/
+!solarized-dark.conf
 
 !blurlock.sh
