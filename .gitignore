@@ -18,6 +18,9 @@
 !compton.conf
 !.fonts.config
 !user-dirs.dirs
+
+!redshift.conf
+
 !geany/
 !colorschemes/
 !solarized-dark.conf
