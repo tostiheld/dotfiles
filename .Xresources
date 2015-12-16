@@ -67,8 +67,8 @@ Xft.lcdfilter: lcddefault
 ! urxvt
 URxvt.scrollBar: false
 !URxvt.borderLess: true
-URxvt.internalBorder: 0
-URxvt.externalBorder: 0
+!URxvt.internalBorder: 5
+!URxvt.externalBorder: 0
 !URxvt.iconFile: /usr/share/icons/Faenza/apps/16/terminal.png
 URxvt.cursorBlink: true
 URxvt*letterSpace: -1
@@ -79,5 +79,5 @@ URxvt.depth: 32
 
 ! rofi
 rofi.opacity: 80
-rofi.width: 100
-rofi.padding: 450
+!rofi.width: 100
+!rofi.padding: 440
