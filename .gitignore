@@ -13,6 +13,7 @@
 !terminator/
 !config
 !.bashrc
+!.profile
 !.gtkrc-2.0
 !.Xresources
 !compton.conf
