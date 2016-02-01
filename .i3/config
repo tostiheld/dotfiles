@@ -37,6 +37,7 @@ bindsym $mod+space focus mode_toggle
 
 bindsym $mod+Shift+q kill
 bindsym $mod+f fullscreen
+bindsym $mod+p mark --toggle "sticky-window"
 
 bindsym $mod+q split h
 bindsym $mod+w split v
@@ -121,6 +122,7 @@ bar {
     position top
     status_command .i3/conkybar.sh
     font pango:Droid Sans Mono 8
+    tray_output LVDS1
 
     wheel_up_cmd   nop
     wheel_down_cmd nop
@@ -144,6 +146,7 @@ for_window [class="Xarchiver"]               floating enable
 for_window [class="Wicd-client.py"]          floating enable
 for_window [class="Galculator"]              floating enable
 for_window [title="File Operation Progress"] floating enable
+for_window [con_mark="sticky-window"]        floating enable, sticky enable
 
 #temp for game dev
 for_window [class="SurvivalRpg"] floating enable, move position 100 px 100 px
@@ -155,7 +158,8 @@ for_window [class="SurvivalRpg"] floating enable, move position 100 px 100 px
 assign [class="Evolution"] $w3
 assign [class="telegram"]  $w2
 assign [class="Skype"]     $w2
-assign [class="Firefox"] $w1
+assign [class="Firefox"]   $w1
+assign [class="Iceweasel"] $w1
 
 # ----------
 # style
@@ -177,7 +181,7 @@ exec nitrogen --restore
 exec xset -b
 exec wicd-client --tray
 
-exec pnmixer
+#exec pnmixer
 exec xfce4-volumed
 exec xfce4-power-manager
 exec thunar --daemon
@@ -185,5 +189,5 @@ exec xautolock -time 3 -locker "~/bin/blurlock.sh"
 exec clipit
 exec redshift-gtk
 exec dropbox start
-exec google-drive-ocamlfuse google-drive
+#exec google-drive-ocamlfuse google-drive
 exec ~/bin/unlockdropbox.sh
