@@ -4,7 +4,7 @@
 # autostart
 # ----------
 
-#compton &
+compton &
 xsetroot -solid "#555" &
 xset -b &
 xrdb -load .Xresources &
@@ -19,4 +19,5 @@ clipit &
 redshift-gtk &
 dropbox start &
 indicator-kdeconnect &
+udiskie -s &
 
