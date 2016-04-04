@@ -8,7 +8,7 @@ scrot /tmp/screen.png
 infile=/tmp/screen.png
 outfile=/tmp/screen.png
 # adjust blurriness here
-size=16
+size=32
 
 w=$(convert $infile -format "%[fx:w]" info:)
 h=$(convert $infile -format "%[fx:h]" info:)
