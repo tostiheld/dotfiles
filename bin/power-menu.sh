@@ -4,7 +4,7 @@
 # (last 3 dependencies are adjustable below)
 # tostiheld, 2016
 
-poweroff_command="echo 'systemctl poweroff'"
+poweroff_command="systemctl poweroff"
 reboot_command="systemctl reboot"
 logout_command="i3-msg exit"
 hibernate_command="pm-hibernate"
