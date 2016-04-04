@@ -39,30 +39,30 @@ Xft.lcdfilter: lcddefault
 !
 ! URxvt*background:            S_base03
 
-*background:              S_base03
-*foreground:              S_base3
-*fading:                  40
-*fadeColor:               S_base03
-*cursorColor:             S_base3
-*pointerColorBackground:  S_base01
-*pointerColorForeground:  S_base3
+URxvt*background:              S_base03
+URxvt*foreground:              S_base3
+URxvt*fading:                  40
+URxvt*fadeColor:               S_base03
+URxvt*cursorColor:             S_base3
+URxvt*pointerColorBackground:  S_base01
+URxvt*pointerColorForeground:  S_base3
 
-*color0:                  S_base02
-*color1:                  S_red
-*color2:                  S_green
-*color3:                  S_yellow
-*color4:                  S_blue
-*color5:                  S_magenta
-*color6:                  S_cyan
-*color7:                  S_base2
-*color9:                  S_orange
-*color8:                  S_base03
-*color10:                 S_base01
-*color11:                 S_base00
-*color12:                 S_base0
-*color13:                 S_violet
-*color14:                 S_base1
-*color15:                 S_base3
+URxvt*color0:                  S_base02
+URxvt*color1:                  S_red
+URxvt*color2:                  S_green
+URxvt*color3:                  S_yellow
+URxvt*color4:                  S_blue
+URxvt*color5:                  S_magenta
+URxvt*color6:                  S_cyan
+URxvt*color7:                  S_base2
+URxvt*color9:                  S_orange
+URxvt*color8:                  S_base03
+URxvt*color10:                 S_base01
+URxvt*color11:                 S_base00
+URxvt*color12:                 S_base0
+URxvt*color13:                 S_violet
+URxvt*color14:                 S_base1
+URxvt*color15:                 S_base3
 
 ! urxvt
 URxvt.scrollBar: false
@@ -72,10 +72,12 @@ URxvt.scrollBar: false
 !URxvt.iconFile: /usr/share/icons/Faenza/apps/16/terminal.png
 URxvt.cursorBlink: true
 URxvt*letterSpace: -1
+URxvt.perl-ext-common:  default,matcher
+URxvt.url-launcher:      /usr/bin/firefox
 
 ! Fonts
 URxvt.font: xft:Monospace:size=10
-URxvt.depth: 32
+!URxvt.depth: 32
 
 ! rofi
 rofi.opacity: 80
