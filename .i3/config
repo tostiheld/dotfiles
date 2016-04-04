@@ -179,8 +179,10 @@ client.urgent   #dc322f #900000    #ffffff #900000
 #exec compton
 exec xsetroot -solid "#555"
 exec xset -b
-exec nm-applet
+exec xrdb -load .Xresources
 
+exec ssh-agent
+exec nm-applet
 #exec pnmixer
 exec xfce4-volumed
 exec xfce4-power-manager
@@ -189,3 +191,4 @@ exec clipit
 exec redshift-gtk
 exec dropbox start
 exec indicator-kdeconnect
+
