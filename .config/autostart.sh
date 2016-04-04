@@ -20,4 +20,5 @@ redshift-gtk &
 dropbox start &
 indicator-kdeconnect &
 udiskie -s &
+conky -c ~/.config/conky_desktop &
 
