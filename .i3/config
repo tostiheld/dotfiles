@@ -60,8 +60,8 @@ bindsym $mod+d layout toggle split
 
 # utilities
 bindsym $mod+Return exec --no-startup-id urxvt
-bindsym $mod+r      exec --no-startup-id rofi -show run
-bindsym $mod+Tab    exec --no-startup-id rofi -show window
+bindsym $mod+r      exec --no-startup-id rofi -show combi
+#bindsym $mod+r      exec --no-startup-id rofi -modi "window,run" -show combi -combi-modi "window,run"
 bindsym $mod+e      exec --no-startup-id urxvt -e ranger
 bindsym $mod+l      exec --no-startup-id ~/bin/blurlock.sh
 
