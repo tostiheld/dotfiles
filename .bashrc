@@ -120,3 +120,8 @@ PATH=$PATH:$HOME/bin
 SAL_USE_VCLPLUGIN=gtk
 
 alias nano="echo 'try to use vim'"
+export EDITOR=vim
+
+# this line should be the last
+trap 'printf "\033]0;%s\007" "${BASH_COMMAND//[^[:print:]]/}"' DEBUG
+
