@@ -21,7 +21,7 @@ set $w9  "9ι"
 set $w10 "10κ"
 
 # window title font
-font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 9
 
 # ----------
 # keybindings
@@ -122,7 +122,7 @@ mode "resize" {
 bar {
     position top
     status_command .i3/conkybar.sh
-    font pango:Droid Sans Mono 8
+    font pango:Droid Sans Mono 9
     tray_output LVDS
 
     wheel_up_cmd   nop
