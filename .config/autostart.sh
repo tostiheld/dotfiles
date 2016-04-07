@@ -4,7 +4,6 @@
 # autostart
 # ----------
 
-compton &
 xsetroot -solid "#555" &
 xset -b &
 xrdb -load .Xresources &
@@ -18,7 +17,6 @@ xautolock -time 3 -locker "~/bin/blurlock.sh"  &
 clipit &
 redshift-gtk &
 dropbox start &
-indicator-kdeconnect &
 udiskie -s &
 conky -c ~/.config/conky_desktop &
 
