@@ -6,9 +6,13 @@ included are configs for:
 - i3 with conkybar
 - dunst
 - terminator
-- .bashrc (custom prompt)
+- .bashrc (custom prompt, aliases, signal trap for window title)
 - gtk
 - compton
+- vim
+- ranger
+- geany (color scheme)
+- rofi
 
 screenshot:
 
