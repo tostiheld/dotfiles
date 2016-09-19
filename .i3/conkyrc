@@ -1,18 +1,23 @@
 # conky config to plug into i3bar
 
-background no
-out_to_console yes
-out_to_x no
-own_window no
-update_interval 5
-total_run_times 0
-short_units yes
-pad_percents 3
-cpu_avg_samples 2
-TEXT
+conky.config = {
+	background = false,
+	out_to_console = true,
+	out_to_x = false,
+	own_window = false,
+	update_interval = 5.0,
+	total_run_times = 0,
+	short_units = true,
+	pad_percents = 3,
+	cpu_avg_samples = 2
+}
+
+conky.text = [[
 [
-{"full_text": "cpu: ${cpu cpu0}% (~${execi 8 sensors | grep 'Physical id 0:' | cut -c18-19}C) (${exec cpufreq-info | grep "The governor" | cut -d'"' -f2 | head -1})", "color":"\#b58900"},
+{"full_text": "cpu: ${cpu cpu0}% (~${texeci 10 sensors | grep 'Physical id 0:' | cut -c18-19}C) (${exec cpufreq-info | grep "The governor" | cut -d'"' -f2 | head -1})", "color":"\#b58900"},
 {"full_text": "ram: $mem","color":"\#6c71c4"},
-{"full_text": "bat: ${battery_percent}%", "color":"\#cb4b16"},
+{"full_text": "updates: ${execi 3600 cat /var/log/update-count.log }", "color": "\#268bd2"},
+{"full_text": "bat: ${battery_short}", "color":"\#cb4b16"},
 {"full_text": "${time %a %d/%m %H:%M} ", "color":"\#2aa198"}
 ],
+]]
