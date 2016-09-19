@@ -4,6 +4,10 @@
 !.config/
 !bin/
 
+!.vim/
+!colors/
+!solarized.vim
+
 !README.md
 !screenfetch.png
 
