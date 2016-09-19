@@ -115,12 +115,15 @@ fi
 
 PS1='\[\e[0;33m\]\u\[\e[m\]@\[\e[0;34m\]\h \[\e[1;37m\]\w\[\e[m\] \[\e[0;33m\]\$\[\e[m\] '
 
-PATH=$PATH:$HOME/bin
-
 SAL_USE_VCLPLUGIN=gtk
 
 alias nano="echo 'try to use vim'"
 export EDITOR=vim
+
+export NETKIT_HOME=/home/thomas/applications/netkit-ng
+
+export PATH=$PATH:$HOME/bin:$NETKIT_HOME/bin
+export MANPATH=$MANPATH:$NETKIT_HOME/man
 
 # this line should be the last
 trap 'printf "\033]0;%s\007" "${BASH_COMMAND//[^[:print:]]/}"' DEBUG
