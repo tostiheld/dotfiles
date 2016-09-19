@@ -4,9 +4,11 @@
 # autostart
 # ----------
 
+monitor-hotplug.sh &
 xsetroot -solid "#555" &
 xset -b &
 xrdb -load .Xresources &
+numlockx on &
 
 ssh-agent &
 nm-applet &
