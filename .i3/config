@@ -9,16 +9,16 @@
 # variables
 set $mod Mod4
 
-set $w1  "1α: www"
-set $w2  "2β: im"
-set $w3  "3γ: mail"
-set $w4  "4δ"
-set $w5  "5ε"
-set $w6  "6ζ"
-set $w7  "7η"
-set $w8  "8θ"
-set $w9  "9ι"
-set $w10 "10κ"
+#set $w1  "1"
+#set $w2  "2"
+#set $w3  "3"
+#set $w4  "4"
+#set $w5  "5"
+#set $w6  "6"
+#set $w7  "7"
+#set $w8  "8"
+#set $w9  "9"
+#set $w10 "10"
 
 # window title font
 font pango:DejaVu Sans Mono 9
@@ -37,7 +37,7 @@ bindsym $mod+space focus mode_toggle
 
 bindsym $mod+Shift+q kill
 bindsym $mod+f fullscreen
-bindsym $mod+p mark --toggle "sticky-window"
+bindsym $mod+p sticky toggle
 
 bindsym $mod+q split h
 bindsym $mod+w split v
@@ -62,32 +62,32 @@ bindsym $mod+d layout toggle split
 bindsym $mod+Return exec --no-startup-id urxvt
 bindsym $mod+r      exec --no-startup-id rofi -show combi
 #bindsym $mod+r      exec --no-startup-id rofi -modi "window,run" -show combi -combi-modi "window,run"
-bindsym $mod+e      exec --no-startup-id urxvt -e ranger
+bindsym $mod+e      exec --no-startup-id urxvt -name ranger -e ranger
 bindsym $mod+l      exec --no-startup-id ~/bin/blurlock.sh
 bindsym $mod+Escape exec ~/bin/power-menu.sh
 
 # workspace switching / moving
-bindsym $mod+1 workspace $w1
-bindsym $mod+2 workspace $w2
-bindsym $mod+3 workspace $w3
-bindsym $mod+4 workspace $w4
-bindsym $mod+5 workspace $w5
-bindsym $mod+6 workspace $w6
-bindsym $mod+7 workspace $w7
-bindsym $mod+8 workspace $w8
-bindsym $mod+9 workspace $w9
-bindsym $mod+0 workspace $w10
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
 
-bindsym $mod+Shift+1 move container to workspace $w1
-bindsym $mod+Shift+2 move container to workspace $w2
-bindsym $mod+Shift+3 move container to workspace $w3
-bindsym $mod+Shift+4 move container to workspace $w4
-bindsym $mod+Shift+5 move container to workspace $w5
-bindsym $mod+Shift+6 move container to workspace $w6
-bindsym $mod+Shift+7 move container to workspace $w7
-bindsym $mod+Shift+8 move container to workspace $w8
-bindsym $mod+Shift+9 move container to workspace $w9
-bindsym $mod+Shift+0 move container to workspace $w10
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
 
 bindsym $mod+t mode "resize"
 
@@ -122,13 +122,12 @@ mode "resize" {
 bar {
     position top
     status_command .i3/conkybar.sh
-    font pango:Droid Sans Mono 9
+    font pango:fontawesome, Droid Sans Mono 10 
     tray_output LVDS
 
     wheel_up_cmd   nop
     wheel_down_cmd nop
     separator_symbol " / "
-    strip_workspace_numbers yes
 
     colors {
         background #002b36
@@ -143,24 +142,26 @@ bar {
 # window-specific settings
 # ----------
 
-for_window [class="Xarchiver"]               floating enable
-for_window [class="Wicd-client.py"]          floating enable
 for_window [class="Galculator"]              floating enable
-for_window [title="File Operation Progress"] floating enable
-for_window [con_mark="sticky-window"]        floating enable, sticky enable
-
-#temp for game dev
-for_window [class="SurvivalRpg"] floating enable, move position 100 px 100 px
+for_window [instance="SimCity 4.exe"]        floating enable; move absolute position 0 0
+for_window [class="factorio"]                floating enable
+for_window [class="Rust"]		     floating enable
 
 # ----------
 # auto assignment
 # ----------
 
-assign [class="Evolution"] $w3
-assign [class="telegram"]  $w2
-assign [class="Skype"]     $w2
-assign [class="Firefox"]   $w1
-assign [class="Iceweasel"] $w1
+for_window [class="telegram"] move to workspace number 2
+for_window [class="Firefox"] move to workspace number 1
+
+# ----------
+# assign workspaces to displays
+# ----------
+
+workspace 1 output DisplayPort-2
+workspace 4 output DisplayPort-1
+workspace 4 output VGA-0
+workspace 10 output LVDS
 
 # ----------
 # style
@@ -178,4 +179,5 @@ client.urgent   #dc322f #900000    #ffffff #900000
 # ----------
 
 exec --no-startup-id ~/.config/autostart.sh
+exec_always --no-startup-id i3-autoname-workspaces.py
 
