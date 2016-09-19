@@ -36,4 +36,6 @@
 !monitor-hotplug.sh
 !i3-autoname-workspaces.py
 !clone
+!toggle-touchpad.sh
+!toggle-governor
 

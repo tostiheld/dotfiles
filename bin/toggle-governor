@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# elevate permissions
+if [ $EUID != 0  ]; then
+	sudo "$0" "$@"
+	exit $?
+fi
+
+cur_governor=$(cpufreq-info | grep "The governor" | cut -d'"' -f2 | head -1)
+new_governor=powersave
+
+if [ $cur_governor == "powersave" ]; then
+	new_governor=performance
+fi
+
+echo "toggling governor to $new_governor"
+
+for i in $(seq 0 7); do
+	cpufreq-set -c $i -g $new_governor
+done
+ 
