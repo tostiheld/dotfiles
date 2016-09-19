@@ -21,9 +21,14 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
- . startx
- logout
-fi
+GNUPGHOME=$HOME/.gnupg
+export GNUPGHOME
+/usr/bin/gpg-agent --daemon
+GPG_AGENT_INFO="${GNUPGHOME}/S.gpg-agent:0:1"
+export GPG_AGENT_INFO
 
+if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
+	. startx
+	logout
+fi
 
