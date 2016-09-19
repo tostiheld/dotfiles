@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# from https://gist.github.com/justbuchanan
+
 # This script listens for i3 events and updates workspace names to show icons
 # for running programs.  It contains icons for a few programs, but more can
 # easily be added by inserting them into WINDOW_ICONS below.
