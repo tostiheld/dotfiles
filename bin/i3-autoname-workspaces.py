@@ -1,122 +1,200 @@
 #!/usr/bin/env python3
 
-# from https://gist.github.com/justbuchanan
-
 # This script listens for i3 events and updates workspace names to show icons
 # for running programs.  It contains icons for a few programs, but more can
-# easily be added by inserting them into WINDOW_ICONS below.
+# easily be added by adding them to WINDOW_ICONS below.
+#
+# It also re-numbers workspaces in ascending order with one skipped number
+# between monitors (leaving a gap for a new workspace to be created). By
+# default, i3 workspace numbers are sticky, so they quickly get out of order.
 #
 # Dependencies
-# * xorg-xprop - install through system package manager
-# * i3ipc - install with pip
+# * xorg-xprop  - install through system package manager
+# * i3ipc       - install with pip
+# * fontawesome - install with pip
 #
 # Installation:
 # * Download this script and place it in ~/.config/i3/ (or anywhere you want)
 # * Add "exec_always ~/.config/i3/i3-autoname-workspaces.py &" to your i3 config
-# * Restart i3: "$ i3-msg restart"
+# * Restart i3: $ i3-msg restart
 #
 # Configuration:
-# The default i3 config's keybingings reference workspaces by name, which is an
-# issue when using this script because the names are constantaly changing to
-# show window icons.  Instead, you'll need to change the keybindings to
+# The default i3 config's keybindings reference workspaces by name, which is an
+# issue when using this script because the "names" are constantaly changing to
+# include window icons.  Instead, you'll need to change the keybindings to
 # reference workspaces by number.  Change lines like:
 #   bindsym $mod+1 workspace 1
 # To:
 #   bindsym $mod+1 workspace number 1
 
-
 import i3ipc
-import subprocess as proc
-import re
+import logging
 import signal
 import sys
-
+import fontawesome as fa
+import re
+import subprocess as proc
+import time
 
 # Add icons here for common programs you use.  The keys are the X window class
-# (WM_CLASS) names and the icons can be any text you want to display. However
-# most of these are character codes for font awesome:
+# (WM_CLASS) names (lower-cased) and the icons can be any text you want to
+# display.
+#
+# Most of these are character codes for font awesome:
 #   http://fortawesome.github.io/Font-Awesome/icons/
-FA_CHROME = '\uf268'
-FA_CODE = '\uf121'
-FA_FILE_PDF_O = '\uf1c1'
-FA_FILE_TEXT_O = '\uf0f6'
-FA_FILE_PICTURE_O = '\uf1c5'
-FA_FILES_O = '\uf0c5'
-FA_FIREFOX = '\uf269'
-FA_MUSIC = '\uf001'
-FA_PICTURE_O = '\uf03e'
-FA_TERMINAL = '\uf120'
-FA_DESKTOP = '\uf108'
-FA_HTML5 = '\uf1b3'
-FA_DOWNLOAD = '\uf019'
-FA_PLAY_CIRCLE = '\uf144'
-FA_STEAM = '\uf1b6'
-FA_COMMENTS = '\uf086'
+#
+# If you're not sure what the WM_CLASS is for your application, you can use
+# xprop (https://linux.die.net/man/1/xprop). Run `xprop | grep WM_CLASS`
+# then click on the application you want to inspect.
 WINDOW_ICONS = {
-    'urxvt': FA_TERMINAL,
-    'Firefox': FA_FIREFOX,
-    'libreoffice': FA_FILE_TEXT_O,
-    'Viewnior': FA_PICTURE_O,
-    'zathura': FA_FILE_PDF_O,
-    'ranger': FA_FILES_O,
-    'VirtualBox': FA_DESKTOP,
-    'jetbrains-phpstorm': FA_HTML5,
-    'Transmission-gtk': FA_DOWNLOAD,
-    'Vlc': FA_PLAY_CIRCLE,
-    'Steam': FA_STEAM,
-    'Telegram' : FA_COMMENTS,
-    'telegram' : FA_COMMENTS,
-    'google-chrome' : FA_CHROME,
-    'Gimp' : FA_FILE_PICTURE_O,
+    'feh': fa.icons['picture-o'],
+    'firefox': fa.icons['firefox'],
+    'chromium': fa.icons['chrome'],
+    'libreoffice': fa.icons['file-text-o'],
+    'zathura': fa.icons['file-pdf-o'],
+    'spotify': fa.icons['spotify'],  # could also use the 'spotify' icon
+    'steam': fa.icons['steam'],
+    'thunar': fa.icons['files-o'],
+    'urxvt': fa.icons['terminal'],
+    'zenity': fa.icons['window-maximize'],
+    'viewnior': fa.icons['picture-o'],
+    'ranger': fa.icons['files-o'],
+    'jetbrains-phpstorm': fa.icons['html5'],
+    'transmission-gtk': fa.icons['download'],
+    'telegram' : fa.icons['paper-plane'],
+    'gimp' : fa.icons['file-image-o'],
+    'gedit' : fa.icons['file-text-o'],
+    'darktable' : fa.icons['camera'],
+    'galculator' : fa.icons['calculator'],
+    'inkscape' : fa.icons['pencil-square-o'],
+    'mixxx' : fa.icons['headphones'],
 }
 
+# This icon is used for any application not in the list above
+DEFAULT_ICON = fa.icons['asterisk']
 
-i3 = i3ipc.Connection()
+def focused_workspace(i3):
+    return [w for w in i3.get_workspaces() if w.focused][0]
 
-# Returns an array of the values for the given property from xprop.  This
-# requires xorg-xprop to be installed.
+# Takes a workspace 'name' from i3 and splits it into three parts:
+# * 'num'
+# * 'shortname' - the workspace's name, assumed to have no spaces
+# * 'icons' - the string that comes after the 
+# Any field that's missing will be None in the returned dict
+def parse_workspace_name(name):
+    return re.match('(?P<num>\d+):?(?P<shortname>\w+)? ?(?P<icons>.+)?',
+                    name).groupdict()
+
+
+# Given a dictionary with 'num', 'shortname', 'icons', returns the formatted name
+# by concatenating them together.
+def construct_workspace_name(parts):
+    new_name = str(parts['num'])
+    if parts['shortname'] or parts['icons']:
+        new_name += ':'
+
+        if parts['shortname']:
+            new_name += parts['shortname']
+
+        if parts['icons']:
+            new_name += ' ' + parts['icons']
+
+    return new_name
+
+
+# Return an array of values for the X property on the given window.
+# Requires xorg-xprop to be installed.
 def xprop(win_id, property):
     try:
-        prop = proc.check_output(['xprop', '-id', str(win_id), property], stderr=proc.DEVNULL)
+        prop = proc.check_output(
+            ['xprop', '-id', str(win_id), property],
+            stderr=proc.DEVNULL)
         prop = prop.decode('utf-8')
         return re.findall('"([^"]+)"', prop)
     except proc.CalledProcessError as e:
-        print("Unable to get property for window '%s'" % str(win_id))
+        logging.warn("Unable to get property for window '%d'" % win_id)
         return None
 
+
 def icon_for_window(window):
+    # Try all window classes and use the first one we have an icon for
     classes = xprop(window.window, 'WM_CLASS')
     if classes != None and len(classes) > 0:
         for cls in classes:
+            cls = cls.lower()  # case-insensitive matching
             if cls in WINDOW_ICONS:
                 return WINDOW_ICONS[cls]
-        print('No icon available for window with classes: %s' % str(classes))
-    return '\uf069'
+    logging.info('No icon available for window with classes: %s' % str(classes))
+    return DEFAULT_ICON
+
 
 # renames all workspaces based on the windows present
-def rename():
-    for workspace in i3.get_tree().workspaces():
-        icons = [icon_for_window(w) for w in workspace.leaves()]
-        icon_str = ': ' + '   '.join(icons) if len(icons) else ''
-        new_name = str(workspace.num) + icon_str
+# also renumbers them in ascending order, with one gap left between monitors
+# for example: workspace numbering on two monitors: [1, 2, 3], [5, 6]
+def rename_workspaces(i3):
+    ws_infos = i3.get_workspaces()
+    current_workspace_name = ""
+    current_workspace = i3.get_tree().find_focused().workspace()
+
+    if current_workspace != None:
+        current_workspace_name = current_workspace.name
+
+    current_workspace_new_name = ""
+
+    logging.info('Current workspace is %s', (current_workspace_name))
+
+    for ws_index, workspace in enumerate(i3.get_tree().workspaces()):
+        ws_info = ws_infos[ws_index]
+
+        name_parts = parse_workspace_name(workspace.name)
+        name_parts['icons'] = '  '.join([icon_for_window(w)
+                                        for w in workspace.leaves()])
+
+        name_parts['num'] = workspace.num
+
+        new_name = construct_workspace_name(name_parts)
+
+        if workspace.name == current_workspace_name:
+            current_workspace_new_name = new_name
+
         i3.command('rename workspace "%s" to "%s"' % (workspace.name, new_name))
+        logging.info('Renamed %s to %s' % (workspace.name, new_name))
 
-rename()
+    time.sleep(0.05)
+    if current_workspace_new_name != "":
+        i3.command('workspace %s' % (current_workspace_new_name))
+        logging.info('Restored focus to %s' % (current_workspace_new_name))
 
-# exit gracefully when ctrl+c is pressed
-def signal_handler(signal, frame):
-    # rename workspaces to just numbers on exit to indicate that this script is
-    # no longer running
+
+# Rename workspaces to just numbers and shortnames, removing the icons.
+def on_exit(i3):
     for workspace in i3.get_tree().workspaces():
-        i3.command('rename workspace "%s" to "%d"' % (workspace.name, workspace.num))
+        name_parts = parse_workspace_name(workspace.name)
+        name_parts['icons'] = None
+        new_name = construct_workspace_name(name_parts)
+        i3.command('rename workspace "%s" to "%s"' % (workspace.name, new_name))
+        logging.info('Renamed %s to %s' % (workspace.name, new_name))
+
     i3.main_quit()
     sys.exit(0)
-signal.signal(signal.SIGINT, signal_handler)
-signal.signal(signal.SIGTERM, signal_handler)
 
-# call rename() for relevant window events
-def on_change(i3, e):
-    if e.change in ['new', 'close', 'move']:
-        rename()
-i3.on('window', on_change)
-i3.main()
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+
+    i3 = i3ipc.Connection()
+
+    # Exit gracefully when ctrl+c is pressed
+    for sig in [signal.SIGINT, signal.SIGTERM]:
+        signal.signal(sig, lambda signal, frame: on_exit(i3))
+
+    rename_workspaces(i3)
+
+    # Call rename_workspaces() for relevant window events
+    def window_event_handler(i3, e):
+        if e.change in ['new', 'close', 'move']:
+            rename_workspaces(i3)
+
+    i3.on('window', window_event_handler)
+    i3.main()
+

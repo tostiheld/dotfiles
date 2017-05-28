@@ -16,3 +16,4 @@ minify=$(convert xc: -format "%[fx:100/$size]" info:)
 convert $infile -resize $minify% -scale ${w}x${h}! $outfile
 
 /usr/bin/i3lock -i /tmp/screen.png
+

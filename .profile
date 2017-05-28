@@ -21,14 +21,24 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-GNUPGHOME=$HOME/.gnupg
-export GNUPGHOME
-/usr/bin/gpg-agent --daemon
-GPG_AGENT_INFO="${GNUPGHOME}/S.gpg-agent:0:1"
-export GPG_AGENT_INFO
-
 if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
-	. startx
+
+	eval $(/usr/bin/gnome-keyring-daemon --start --components=secrets,pkcs11)
+
+	eval $(ssh-agent)
+
+	# setup gnupg
+	GNUPGHOME=$HOME/.gnupg
+	export GNUPGHOME
+	/usr/bin/gpg-agent --daemon
+	GPG_AGENT_INFO="${GNUPGHOME}/S.gpg-agent:0:1"
+	export GPG_AGENT_INFO
+
+	export QT_QPA_PLATFORMTHEME=gtk2
+
+	#. startx > /dev/null
+	exec startx -- vt1 &> /dev/null
+
 	logout
 fi
 
